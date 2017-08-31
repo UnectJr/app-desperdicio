@@ -1,5 +1,14 @@
 {
   "name": "appDesperdicio",
   "app_id": "",
-  "type": "ionic-angular"
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  },
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "https://app-desp-apitest.herokuapp.com/index.php"
+    }
+  ]
 }

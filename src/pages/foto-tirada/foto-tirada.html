@@ -1,0 +1,33 @@
+<!--
+  HTML da página de edição e envio da mensagem.
+
+  O usuário visualiza a imagem que está enviando, podendo adicionar uma descrição escrita para ela antes de enviar.
+
+  Também pode voltar à página inicial, ou cancelar o envio (ele volta para a página inicial também)
+-->
+<ion-header>
+
+	<ion-navbar color="unect01">
+		<ion-title>Enviar notificação</ion-title>
+	</ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding text-center>
+	<ion-card>
+		<ion-card-content>
+			<h2>Notificação sobre desperdício</h2>
+			<img [src]="base64_image" *ngIf="base64_image" />
+			<ion-textarea placeholder="Descrição (opcional)" [value]="texto" [(ngModel)]="texto"></ion-textarea>
+			<button ion-button color="unect01" (click)="enviar()">Enviar</button>
+			<button ion-button color="unect01" (click)="cancelar()">Cancelar</button>
+		</ion-card-content>
+	</ion-card>
+</ion-content>
+
+<ion-footer>
+	<ion-toolbar color="unect01">
+		<ion-title><img src="assets/images/unect_jr_logo_cor_01.png" width="50" height="50" alt="unect logo"></ion-title>
+	</ion-toolbar>
+</ion-footer>

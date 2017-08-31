@@ -1,14 +1,35 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
-</ion-header>
+<!--
+  HTML da página inicial do app sobre desperdício na UTFPR
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  Aqui é possível ao usuário decidir entre tirar uma foto (ícone da câmera) ou escolher uma da galeria do celular dele (ícone da galeria)
+-->
+
+<ion-content padding-top text-center>
+	<div id="container">
+		<h4>Bem vindo ao app</h4>
+		<h1>UTFPR Desperdício</h1>
+		<div class="row"></div>
+		<div class="row"></div>
+		<p>
+			Para reportar clique em um dos ícones abaixo
+		</p>
+		<div class="row">
+			<div class="col">
+				<button ion-button icon-only color="light" class="btn-circle btn-xl" (click)="capturar_foto(false)">
+					<ion-icon name="md-camera" color="dark"></ion-icon>
+				</button>
+			</div>
+			<div class="col">
+				<button ion-button icon-only color="light" class="btn-circle btn-xl" (click)="capturar_foto(true)">
+					<ion-icon name="md-albums" color="dark"></ion-icon>
+				</button>
+			</div>
+		</div>
+	</div>
 </ion-content>
+
+<ion-footer>
+	<ion-toolbar color="unect01">
+		<ion-title><img src="assets/images/unect_jr_logo_cor_01.png" width="50" height="50" alt="unect logo"></ion-title>
+	</ion-toolbar>
+</ion-footer>
