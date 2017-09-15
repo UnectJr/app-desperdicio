@@ -6,11 +6,17 @@ import { Camera } from '@ionic-native/camera';
 import { ToastController, LoadingController } from 'ionic-angular';
 // Páginas
 import { FotoTiradaPage } from '../foto-tirada/foto-tirada';
+// Firebase
+import {firebaseDatabase} from '../../app/firebase.config';
+import { Http, Headers } from '@angular/http';
+
 
 @Component({
 	selector: 'page-home',
 	templateUrl: 'home.html'
 })
+
+
 export class HomePage {
 
 	/**
@@ -27,7 +33,8 @@ export class HomePage {
 	 * Método construtor. Instancia NavController, Camera e ToastController para uso
 	 */
 	constructor(public navCtrl: NavController, private camera: Camera,
-		private toastCtrl: ToastController, public loadingCtrl: LoadingController) {
+		private toastCtrl: ToastController, public loadingCtrl: LoadingController,
+		public http: Http) {
 	}
 
 	/**
@@ -38,6 +45,23 @@ export class HomePage {
 	 * da foto for da galeria, ou deve ser <FALSE> quando o usuário quiser tirar
 	 * uma nova foto com sua câmera
 	 */
+	
+	testar_api(){
+		
+		let loading = this.loadingCtrl.create({
+				content: 'Enviando...'
+			});
+		var now = new Date;
+		let body = {
+	    		imagem: 'IMAGEM TESTE',
+				texto: 'TEXTO TESTE22222',
+				resolvido: false,
+				data: now.getDate()+"/"+(1+now.getMonth())+"/"+now.getFullYear()	
+			};
+		var key = firebaseDatabase.ref().child('cp').push().key;
+		firebaseDatabase.ref('reports/cp/'+key).set(body);
+	}
+
 	capturar_foto(galeria) {
 		// Apresenta mensagem de carregamento
 		let loading = this.loadingCtrl.create({
@@ -46,6 +70,7 @@ export class HomePage {
 		loading.present();
 		// Fonte da fonto (local de onde se tira a foto: câmera ou galeria)
 		let fonte_foto;
+		
 		if(galeria === false) {
 			// Caso opte por tirar uma foto, a fonte passa a ser a câmera
 			fonte_foto = this.camera.PictureSourceType.CAMERA;

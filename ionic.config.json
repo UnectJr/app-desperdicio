@@ -8,7 +8,7 @@
   "proxies": [
     {
       "path": "/api",
-      "proxyUrl": "https://app-desp-apitest.herokuapp.com/index.php"
+      "proxyUrl": "https://app-agua-utfpr.firebaseio.com"
     }
   ]
 }

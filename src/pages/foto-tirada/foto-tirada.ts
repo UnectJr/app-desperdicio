@@ -3,6 +3,9 @@ import { IonicPage, NavController, NavParams, LoadingController, ToastController
 // Http
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { firebaseDatabase } from '../../app/firebase.config'
+import * as firebase from "firebase"; 
+var storageRef = firebase.storage().ref();
 
 @IonicPage()
 @Component({
@@ -38,12 +41,11 @@ export class FotoTiradaPage {
 	 * real da api
 	 * 
 	 */
-	public url_root = "https://app-desp-apitest.herokuapp.com/index.php";
-
+	public url_root = "https://app-agua-utfpr.firebaseio.com/"
 	/**
 	 * Rota da api para deploy das informações (imagem, texto)
 	 */
-	public url_api = "/report/new";
+	public url_api = "reports/cp/";
 
 	/**
 	 * Construtor da página. Carrega a foto tirada pela câmera
@@ -65,16 +67,31 @@ export class FotoTiradaPage {
 			});
 			loading.present();
 			console.log("Enviando report...");
-
-			// Cabeçalho HTTP para JSON
-			let headers = new Headers({ 'Content-Type': 'application/json' });
+			// Cria um cabeçalho
+			//let headers = new Headers({ 'Content-Type': 'application/json' });
+			// Chave unica do report
+			//var key = firebaseDatabase.ref().child('cp').push().key;
+			// Firebase storage
+			/*var storage_cp = storageRef.child(key+'.jpg');
+			storage_cp.putString(this.base64_image, 'base64').then(function(snapshot) {
+  					console.log('Uploaded a base64 string!');
+			});*/
+	    	// Faz a chamada JS para a api
+			var now = new Date;
 			// Cria um corpo para a mensagem (JSON oom foto e texto)
 			let body = {
 	    		imagem: this.base64_image,
-	    		texto: this.texto
-	    	};
-	    	// Faz a chamada HTTP para a api
-			this.http.post(encodeURI(this.url_root + this.url_api),JSON.stringify(body), headers).map(res => res.json())
+				texto: this.texto,
+				resolvido: false,
+				data: now.getDate()+"/"+(1+now.getMonth())+"/"+now.getFullYear()	
+			};
+			// Faz o commit no banco de dados
+			var key = firebaseDatabase.ref().child('cp').push().key;
+			firebaseDatabase.ref( this.url_api + key ).set(body);
+			loading.dismiss();
+
+			// Chamada HTTP para a api
+			/*this.http.post(encodeURI(this.url_root + this.url_api),JSON.stringify(body), headers).map(res => res.json())
 			.subscribe(
 				data => {
 					// Termina mensagem de carregamento
@@ -111,7 +128,7 @@ export class FotoTiradaPage {
 					});
 					toast.present();
 				}
-        	);
+        	);*/
 		}
 	}
 
