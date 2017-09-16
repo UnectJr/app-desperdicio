@@ -56,6 +56,7 @@ export class FotoTiradaPage {
 	 * Função que envia as informações do usuário (foto, texto) para api
 	 */
 	enviar() {
+		// Se a imagem for indefinida (não existir) não executa envio
 		if(this.base64_image !== undefined){
 			// Mostra uma mensagem de carregamento enquanto envia mensagem p/ api
 			let loading = this.loadingCtrl.create({
@@ -63,15 +64,6 @@ export class FotoTiradaPage {
 			});
 			loading.present();
 			console.log("Enviando report...");
-			// Cria um cabeçalho
-			//let headers = new Headers({ 'Content-Type': 'application/json' });
-			// Chave unica do report
-			//var key = firebaseDatabase.ref().child('cp').push().key;
-			// Firebase storage
-			/*var storage_cp = storageRef.child(key+'.jpg');
-			storage_cp.putString(this.base64_image, 'base64').then(function(snapshot) {
-  					console.log('Uploaded a base64 string!');
-			});*/
 	    	// Faz a chamada JS para a api
 			var now = new Date;
 			// Cria um corpo para a mensagem (JSON oom foto e texto)
@@ -83,56 +75,42 @@ export class FotoTiradaPage {
 			};
 			// Faz o commit no banco de dados
 			var key = firebaseDatabase.ref().child('cp').push().key;
-			firebaseDatabase.ref( this.url_api + key ).set(body, function(err){
-				// Arrumar o toast para o usuario (só consegui fazer aparecer no console)
-				if(err){
-					console.log("Erro ao enviar report!");
-				}
-				else{
-					console.log("Report enviado com sucesso!");
-				}
+			// Adicionado ".then" e notação de seta para tratar problemas
+			firebaseDatabase.ref( this.url_api + key ).set(body).then( () => {
+				// .then é usado para quando efetuar ação
+				// O primeiro parâmetro de .then é para quando der certo
+				// Tira carregamento
+				loading.dismiss();
+				// Mostra toast de sucesso
+				let toast = this.toastCtrl.create({
+					message: 'Report enviado!',
+					duration: 3000,
+					position: 'top'
+				});
+				// Quando toast termina seu tempo a navegação volta para home
+				toast.onDidDismiss(() => {
+					this.navCtrl.pop();
+				});
+				// Mostra mensagem
+				toast.present();
+				console.log('Report enviado!');
+			}, (err) => {// Caso dê errado
+				// O segundo parâmetro de .then é usado para quando der erro
+				// Fecha janela de loading quando é feita requisição
+				loading.dismiss();
+				// Apresenta resposta de erro ao usuário
+            	let toast = this.toastCtrl.create({
+					message: 'Erro ao enviar report!',
+					duration: 3000,
+					position: 'top'
+				});
+				// Quando toast termina seu tempo a navegação volta para home
+				toast.onDidDismiss(() => {
+					this.navCtrl.pop();
+				});
+				// Mostra mensagem
+				toast.present();
 			});
-			loading.dismiss();
-
-			// Chamada HTTP para a api
-			/*this.http.post(encodeURI(this.url_root + this.url_api),JSON.stringify(body), headers).map(res => res.json())
-			.subscribe(
-				data => {
-					// Termina mensagem de carregamento
-					loading.dismiss();
-					// Mostra resposta no console
-		            let resposta = data.resultado;
-		            console.log(resposta);
-		            // Apresenta resposta de sucesso ao usuário
-	            	let toast = this.toastCtrl.create({
-						message: `Report enviado!`,
-						duration: 3000,
-						position: 'top'
-					});
-					// Quando toast termina seu tempo, a navegação volta para home
-					toast.onDidDismiss(() => {
-						this.navCtrl.pop();
-					});
-					toast.present();
-	        	},
-	        	err => {
-	        		// Termina mensagem de carregamento
-					loading.dismiss();
-					// Resultado no console
-					console.log("Erro ao tentar enviar report!");
-					// Apresenta resposta de falha ao usuário
-					let toast = this.toastCtrl.create({
-						message: `Erro ao tentar enviar report!`,
-						duration: 3000,
-						position: 'top'
-					});
-					// Quando toast termina seu tempo, a navegação volta para home
-					toast.onDidDismiss(() => {
-						this.navCtrl.pop();
-					});
-					toast.present();
-				}
-        	);*/
 		}
 	}
 

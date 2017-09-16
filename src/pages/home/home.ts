@@ -32,7 +32,7 @@ export class HomePage {
 	 * Método construtor. Instancia NavController, Camera e ToastController para uso
 	 */
 	constructor(public navCtrl: NavController, private camera: Camera,
-		private toastCtrl: ToastController, public loadingCtrl: LoadingController) {
+		public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
 	}
 
 	/**
@@ -48,6 +48,7 @@ export class HomePage {
 		let loading = this.loadingCtrl.create({
 				content: 'Enviando...'
 			});
+		loading.present();
 		var now = new Date;
 		let body = {
 	    		imagem: 'IMAGEM TESTE',
@@ -56,13 +57,30 @@ export class HomePage {
 				data: now.getDate()+"/"+(1+now.getMonth())+"/"+now.getFullYear()	
 			};
 		var key = firebaseDatabase.ref().child('cp').push().key;
-		firebaseDatabase.ref('reports/cp/'+key).set(body, function(err){
-			if(err){
-				console.log("Erro ao enviar report!");
-			}
-			else{
-				console.log("Report enviado com sucesso!");
-			}
+		// Adicionado ".then" e notação de seta para tratar problemas
+		firebaseDatabase.ref('reports/cp/'+key).set(body).then( () => {
+			// Tira carregamento
+			loading.dismiss();
+			// Mostra toast de sucesso
+			let toast = this.toastCtrl.create({
+					message: 'Report enviado!',
+					duration: 3000,
+					position: 'top'
+				});
+				// Mostra mensagem
+				toast.present();
+			console.log('Report enviado!');
+		}, (err) => { // caso dê errado
+			// Tira carregamento
+			loading.dismiss();
+			// Mostra toast de erro
+			let toast = this.toastCtrl.create({
+					message: 'Erro ao enviar report!',
+					duration: 3000,
+					position: 'top'
+				});
+				// Mostra mensagem
+				toast.present();
 		});
 	}
 
