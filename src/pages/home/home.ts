@@ -8,7 +8,6 @@ import { ToastController, LoadingController } from 'ionic-angular';
 import { FotoTiradaPage } from '../foto-tirada/foto-tirada';
 // Firebase
 import {firebaseDatabase} from '../../app/firebase.config';
-import { Http, Headers } from '@angular/http';
 
 
 @Component({
@@ -33,8 +32,7 @@ export class HomePage {
 	 * Método construtor. Instancia NavController, Camera e ToastController para uso
 	 */
 	constructor(public navCtrl: NavController, private camera: Camera,
-		private toastCtrl: ToastController, public loadingCtrl: LoadingController,
-		public http: Http) {
+		private toastCtrl: ToastController, public loadingCtrl: LoadingController) {
 	}
 
 	/**
@@ -47,7 +45,6 @@ export class HomePage {
 	 */
 	
 	testar_api(){
-		
 		let loading = this.loadingCtrl.create({
 				content: 'Enviando...'
 			});
@@ -59,7 +56,14 @@ export class HomePage {
 				data: now.getDate()+"/"+(1+now.getMonth())+"/"+now.getFullYear()	
 			};
 		var key = firebaseDatabase.ref().child('cp').push().key;
-		firebaseDatabase.ref('reports/cp/'+key).set(body);
+		firebaseDatabase.ref('reports/cp/'+key).set(body, function(err){
+			if(err){
+				console.log("Erro ao enviar report!");
+			}
+			else{
+				console.log("Report enviado com sucesso!");
+			}
+		});
 	}
 
 	capturar_foto(galeria) {

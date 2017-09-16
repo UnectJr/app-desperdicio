@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 // Http
-import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { firebaseDatabase } from '../../app/firebase.config'
-import * as firebase from "firebase"; 
-var storageRef = firebase.storage().ref();
 
 @IonicPage()
 @Component({
@@ -51,8 +48,7 @@ export class FotoTiradaPage {
 	 * Construtor da página. Carrega a foto tirada pela câmera
 	 */
 	constructor(public navCtrl: NavController, public navParams: NavParams,
-		public loadingCtrl: LoadingController, public toastCtrl: ToastController,
-		public http: Http) {
+		public loadingCtrl: LoadingController, public toastCtrl: ToastController,) {
 		this.base64_image = this.navParams.get('foto');
 	}
 
@@ -87,7 +83,15 @@ export class FotoTiradaPage {
 			};
 			// Faz o commit no banco de dados
 			var key = firebaseDatabase.ref().child('cp').push().key;
-			firebaseDatabase.ref( this.url_api + key ).set(body);
+			firebaseDatabase.ref( this.url_api + key ).set(body, function(err){
+				// Arrumar o toast para o usuario (só consegui fazer aparecer no console)
+				if(err){
+					console.log("Erro ao enviar report!");
+				}
+				else{
+					console.log("Report enviado com sucesso!");
+				}
+			});
 			loading.dismiss();
 
 			// Chamada HTTP para a api
