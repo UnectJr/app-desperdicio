@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 // Http
 import 'rxjs/add/operator/map';
-import { firebaseDatabase } from '../../app/firebase.config'
+import { firebaseDatabase, timestamp } from '../../app/firebase.config'
 
 @IonicPage()
 @Component({
@@ -64,19 +64,18 @@ export class FotoTiradaPage {
 			});
 			loading.present();
 			console.log("Enviando report...");
-	    	// Faz a chamada JS para a api
-			var now = new Date;
 			// Cria um corpo para a mensagem (JSON oom foto e texto)
 			let body = {
 	    		imagem: this.base64_image,
 				texto: this.texto,
 				resolvido: false,
-				data: now.getDate()+"/"+(1+now.getMonth())+"/"+now.getFullYear()	
+				// Adicionado hora do servidor no formato UNIX TIMESTAMP
+				data: timestamp
+				//data: now.getDate()+"/"+(1+now.getMonth())+"/"+now.getFullYear()+" ~~ "+now.getHours()+":"+now.getMinutes()	
 			};
 			// Faz o commit no banco de dados
-			var key = firebaseDatabase.ref().child('cp').push().key;
 			// Adicionado ".then" e notação de seta para tratar problemas
-			firebaseDatabase.ref( this.url_api + key ).set(body).then( () => {
+			firebaseDatabase.ref( this.url_api ).push(body).then( () => {
 				// .then é usado para quando efetuar ação
 				// O primeiro parâmetro de .then é para quando der certo
 				// Tira carregamento

@@ -12,3 +12,4 @@ import * as firebase from "firebase";
     firebase.initializeApp(firebaseConfig);
 
     export var firebaseDatabase = firebase.database();
+    export var timestamp = firebase.database.ServerValue.TIMESTAMP;

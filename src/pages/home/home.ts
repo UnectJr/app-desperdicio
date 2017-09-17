@@ -7,7 +7,7 @@ import { ToastController, LoadingController } from 'ionic-angular';
 // Páginas
 import { FotoTiradaPage } from '../foto-tirada/foto-tirada';
 // Firebase
-import {firebaseDatabase} from '../../app/firebase.config';
+import { firebaseDatabase, timestamp } from '../../app/firebase.config';
 
 
 @Component({
@@ -49,16 +49,16 @@ export class HomePage {
 				content: 'Enviando...'
 			});
 		loading.present();
-		var now = new Date;
 		let body = {
 	    		imagem: 'IMAGEM TESTE',
 				texto: 'TEXTO TESTE22222',
 				resolvido: false,
-				data: now.getDate()+"/"+(1+now.getMonth())+"/"+now.getFullYear()	
+				// Adicionado hora do servidor no formato UNIX TIMESTAMP
+				data: timestamp
+				//data: now.getDate()+"/"+(1+now.getMonth())+"/"+now.getFullYear()+" ~~ "+now.getHours()+":"+now.getMinutes()	
 			};
-		var key = firebaseDatabase.ref().child('cp').push().key;
 		// Adicionado ".then" e notação de seta para tratar problemas
-		firebaseDatabase.ref('reports/cp/'+key).set(body).then( () => {
+		firebaseDatabase.ref('reports/cp/').push(body).then( () => {
 			// Tira carregamento
 			loading.dismiss();
 			// Mostra toast de sucesso
