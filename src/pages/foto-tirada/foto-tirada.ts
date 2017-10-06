@@ -70,7 +70,7 @@ export class FotoTiradaPage {
 				texto: this.texto,
 				resolvido: false,
 				// Adicionado hora do servidor no formato UNIX TIMESTAMP
-				data: -timestamp
+				data: timestamp
 				//data: now.getDate()+"/"+(1+now.getMonth())+"/"+now.getFullYear()+" ~~ "+now.getHours()+":"+now.getMinutes()	
 			};
 			// Faz o commit no banco de dados
