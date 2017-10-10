@@ -22,7 +22,7 @@ export class FotoTiradaPage {
 	public base64_image: string;
 
 	/**
-	 * URL raiz da api
+	 * URL raiz da api (para chamadas HTTP a uma api REST -- não é necessário quando usando Firebase)
 	 * 
 	 * Para rodar app em um dispositivo com:
 	 * 		-> ionic run
@@ -39,10 +39,16 @@ export class FotoTiradaPage {
 	 * 
 	 */
 	public url_root = "https://app-agua-utfpr.firebaseio.com/"
+	
 	/**
 	 * Rota da api para deploy das informações (imagem, texto)
 	 */
 	public url_api = "reports/cp/";
+
+	/**
+	 * Atributo booleano que indica se report já foi enviado
+	 */
+	public foto_enviada: boolean;
 
 	/**
 	 * Construtor da página. Carrega a foto tirada pela câmera
@@ -50,6 +56,8 @@ export class FotoTiradaPage {
 	constructor(public navCtrl: NavController, public navParams: NavParams,
 		public loadingCtrl: LoadingController, public toastCtrl: ToastController,) {
 		this.base64_image = this.navParams.get('foto');
+		this.texto = "";
+		this.foto_enviada = false;
 	}
 
 	/**
@@ -57,59 +65,63 @@ export class FotoTiradaPage {
 	 */
 	enviar() {
 		// Se a imagem for indefinida (não existir) não executa envio
-		if(this.base64_image !== undefined){
+		if(!this.foto_enviada && this.base64_image !== undefined){
+			// Atualiza flag de envio do report para não permitir enviar duas vezes seguidas
+			this.foto_enviada = true;
 			// Mostra uma mensagem de carregamento enquanto envia mensagem p/ api
 			let loading = this.loadingCtrl.create({
 				content: 'Enviando...'
 			});
 			loading.present();
-			console.log("Enviando report...");
+			//console.log("Enviando report...");
 			// Cria um corpo para a mensagem (JSON oom foto e texto)
 			let body = {
 	    		imagem: this.base64_image,
 				texto: this.texto,
 				resolvido: false,
 				// Adicionado hora do servidor no formato UNIX TIMESTAMP
-				data: timestamp
+				data: timestamp,
+				data_invertida: timestamp
 				//data: now.getDate()+"/"+(1+now.getMonth())+"/"+now.getFullYear()+" ~~ "+now.getHours()+":"+now.getMinutes()	
 			};
-			// Faz o commit no banco de dados
-			// Adicionado ".then" e notação de seta para tratar problemas
-			firebaseDatabase.ref( this.url_api ).push(body).then( () => {
-				// .then é usado para quando efetuar ação
-				// O primeiro parâmetro de .then é para quando der certo
-				// Tira carregamento
-				loading.dismiss();
-				// Mostra toast de sucesso
-				let toast = this.toastCtrl.create({
-					message: 'Report enviado!',
-					duration: 3000,
-					position: 'top'
-				});
-				// Quando toast termina seu tempo a navegação volta para home
-				toast.onDidDismiss(() => {
-					this.navCtrl.pop();
-				});
-				// Mostra mensagem
-				toast.present();
-				console.log('Report enviado!');
-			}, (err) => {// Caso dê errado
-				// O segundo parâmetro de .then é usado para quando der erro
-				// Fecha janela de loading quando é feita requisição
-				loading.dismiss();
-				// Apresenta resposta de erro ao usuário
-            	let toast = this.toastCtrl.create({
-					message: 'Erro ao enviar report!',
-					duration: 3000,
-					position: 'top'
-				});
-				// Quando toast termina seu tempo a navegação volta para home
-				toast.onDidDismiss(() => {
-					this.navCtrl.pop();
-				});
-				// Mostra mensagem
-				toast.present();
+			// Realiza o push de informações no banco
+			var promise = firebaseDatabase.ref(this.url_api).push(body);
+			// Recupera o timestamp do servidor e modifica o body
+			promise.on('value', function(snapshot) {
+				body.data_invertida = snapshot.val().data_invertida * -1;
 			});
+			// Atualiza somente data_invertida do post com data invertida
+			firebaseDatabase.ref(this.url_api + promise.key).update({ data_invertida: body.data_invertida }).then(
+				() => {
+					loading.dismiss();
+					// Toast
+					let toast = this.toastCtrl.create({
+						message: 'Report enviado!',
+						duration: 3000,
+						position: 'top'
+					});
+					// Quando toast termina seu tempo a navegação volta para home
+					toast.onDidDismiss(() => {
+						this.cancelar();
+					});
+					// Mostra mensagem
+					toast.present();
+				}, (err) => {
+					loading.dismiss();
+					// Toast
+					let toast = this.toastCtrl.create({
+						message: 'Erro ao enviar report!',
+						duration: 3000,
+						position: 'top'
+					});
+					// Quando toast termina seu tempo a navegação volta para home
+					toast.onDidDismiss(() => {
+						this.cancelar();
+					});
+					// Mostra mensagem
+					toast.present();
+				}
+			);
 		}
 	}
 
