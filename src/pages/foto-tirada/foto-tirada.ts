@@ -81,14 +81,14 @@ export class FotoTiradaPage {
 				resolvido: false,
 				// Adicionado hora do servidor no formato UNIX TIMESTAMP
 				data: timestamp,
-				data_invertida: timestamp
+				data_invertida: null
 				//data: now.getDate()+"/"+(1+now.getMonth())+"/"+now.getFullYear()+" ~~ "+now.getHours()+":"+now.getMinutes()	
 			};
 			// Realiza o push de informações no banco
 			var promise = firebaseDatabase.ref(this.url_api).push(body);
 			// Recupera o timestamp do servidor e modifica o body
 			promise.on('value', function(snapshot) {
-				body.data_invertida = snapshot.val().data_invertida * -1;
+				body.data_invertida = snapshot.val().data * -1;
 			});
 			// Atualiza somente data_invertida do post com data invertida
 			firebaseDatabase.ref(this.url_api + promise.key).update({ data_invertida: body.data_invertida }).then(
