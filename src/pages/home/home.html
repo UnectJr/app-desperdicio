@@ -6,24 +6,25 @@
 
 <ion-content padding-top text-center>
 	<ion-header>
-		<ion-navbar color="purple">
+		<ion-navbar color="primary">
 			<ion-title>UTFPR Desperdício</ion-title>
 		</ion-navbar>
 	</ion-header>
 	<div id="container">
 		<div class="row"></div>
+		<img src="assets/images/water.png" width="50" height="50">
 		<ion-title>Bem vindo ao app</ion-title>
 		<div class="row"></div>
 		<p>Para reportar alguma irregularidade clique em um dos ícones abaixo</p>
 		<div class="container">
 			<div class="col">
-				<button ion-button round color="purple" (click)="capturar_foto(false)">
+				<button ion-button round color="primary" (click)="capturar_foto(false)">
 					<ion-icon name="md-camera" color="light"></ion-icon> &nbsp; Capturar Imagem
 				</button>
 			</div>
 			<div class="col">
-				<button ion-button outline round color="purple" (click)="capturar_foto(true)">
-					<ion-icon name="md-images" color="purple"></ion-icon> &nbsp; Galeria de fotos
+				<button ion-button outline round color="primary" (click)="capturar_foto(true)">
+					<ion-icon name="md-images" color="primary"></ion-icon> &nbsp; Galeria de fotos
 				</button>
 			</div>
 		</div>
@@ -31,7 +32,7 @@
 </ion-content>
 
 <ion-footer>
-	<ion-toolbar color="purple">
+	<ion-toolbar color="primary">
 		<ion-title><img src="assets/images/unect-logo.png" width="30" height="35" alt="unect logo"></ion-title>
 	</ion-toolbar>
 </ion-footer>
