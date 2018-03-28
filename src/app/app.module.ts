@@ -8,11 +8,8 @@ import { HomePage } from '../pages/home/home';
 import { FotoTiradaPage } from '../pages/foto-tirada/foto-tirada';
 // Camera
 import { Camera } from '@ionic-native/camera';
-// Network
-import { Network } from '@ionic-native/network';
 // Http
 import { HttpModule } from '@angular/http';
-import { ConnectivityServiceProvider } from '../providers/connectivity-service/connectivity-service';
 
 @NgModule({
   declarations: [
@@ -35,9 +32,7 @@ import { ConnectivityServiceProvider } from '../providers/connectivity-service/c
     StatusBar,
     SplashScreen,
     Camera,
-    Network,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ConnectivityServiceProvider
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
 export class AppModule {}
