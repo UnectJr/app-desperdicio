@@ -2,19 +2,20 @@ import * as firebase from "firebase";
 
 // Initialize Firebase
     export var firebaseConfig = {
-      apiKey: "AIzaSyBiMgfyZ_izdFKLDl05vftWixxaS6xKIyM",
+      /*apiKey: "AIzaSyBiMgfyZ_izdFKLDl05vftWixxaS6xKIyM",
       authDomain: "app-agua-utfpr.firebaseapp.com",
       databaseURL: "https://app-agua-utfpr.firebaseio.com",
       projectId: "app-agua-utfpr",
       storageBucket: "app-agua-utfpr.appspot.com",
-      messagingSenderId: "142712018169"
+      messagingSenderId: "142712018169"*/
 
-      /*apiKey: "AIzaSyDQFQ59lMT5wk4lFaJ0bUR0UnP0jVZ3IgQ",
-      authDomain: "testewebchat-1a3fa.firebaseapp.com",
-      databaseURL: "https://testewebchat-1a3fa.firebaseio.com",
-      projectId: "testewebchat-1a3fa",
-      storageBucket: "testewebchat-1a3fa.appspot.com",
-      messagingSenderId: "128075295986"*/
+      // conta de teste Firebase (appaguas@gmail.com)
+      apiKey: "AIzaSyAaiobOgYPey-2zhvXCt6XOyZutpBBpml4",
+      authDomain: "appaguas-utfpr.firebaseapp.com",
+      databaseURL: "https://appaguas-utfpr.firebaseio.com",
+      projectId: "appaguas-utfpr",
+      storageBucket: "",
+      messagingSenderId: "7612106731"
 
       /*apiKey: "AIzaSyC8IfiS0RazzpNOZsWkHe8NcuiqyfqpWwk",
       authDomain: "app-desperdicio.firebaseapp.com",
