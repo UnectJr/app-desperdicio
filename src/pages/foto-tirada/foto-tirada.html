@@ -19,6 +19,32 @@
 		<ion-card-content>
 			<h2>Notificação sobre desperdício</h2>
 			<img [src]="base64_image" *ngIf="base64_image" />
+			<ion-list>
+				<ion-item>
+				  <ion-label>Local</ion-label>
+				  <ion-select [(ngModel)]="local" (ionChange)="mudarValorLocal(local)" [ngModelOptions]="{standalone: true}">
+					<ion-option value="bloco-a">Bloco A</ion-option>
+					<ion-option value="bloco-p">Bloco P</ion-option>
+					<ion-option value="bloco-ghi">Bloco GHI</ion-option>
+					<ion-option value="bloco-k">Bloco K</ion-option>
+					<ion-option value="hall">Hall</ion-option>
+					<ion-option value="incubadora">Incubadora</ion-option>
+					<ion-option value="outro">Outro</ion-option>
+				  </ion-select>
+				</ion-item>
+			  </ion-list>
+			  <ion-list>
+				<ion-item>
+				  <ion-label>Andar</ion-label>
+				  <ion-select [(ngModel)]="andar" (ionChange)="mudarValorAndar(andar)" [ngModelOptions]="{standalone: true}">
+					<ion-option value="nenhum">Nenhum</ion-option>
+					<ion-option value="terreo">Térreo</ion-option>
+					<ion-option value="1">1</ion-option>
+					<ion-option value="2">2</ion-option>
+					<ion-option value="outro">Outro</ion-option>
+				  </ion-select>
+				</ion-item>
+			  </ion-list>
 			<ion-textarea placeholder="Descrição (opcional)" [value]="texto" [(ngModel)]="texto"></ion-textarea>
 			<button ion-button color="unect01" (click)="enviar()">Enviar</button>
 			<button ion-button color="unect01" (click)="cancelar()">Cancelar</button>

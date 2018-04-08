@@ -15,6 +15,8 @@ export class FotoTiradaPage {
 	 * Texto para descrição da imagem
 	 */
 	public texto: string;
+	public andar: string;
+	public local: string;
 
 	/**
 	 * Foto como string de base 64
@@ -57,9 +59,38 @@ export class FotoTiradaPage {
 		public loadingCtrl: LoadingController, public toastCtrl: ToastController,) {
 		this.base64_image = this.navParams.get('foto');
 		this.texto = "";
+		this.local = "";
+		this.andar = "";
 		this.foto_enviada = false;
 	}
-
+	/*
+	*	Função que atribui o valor mudado no select à variavel local
+	*/ 
+	mudarValorLocal(selecionado){
+		if(selecionado == "outro"){
+			let toast = this.toastCtrl.create({
+				message: 'Por favor especificar o local na descrição.',
+				duration: 3000,
+				position: 'top'
+			});
+			toast.present();
+		}
+		this.local = selecionado;
+	}
+	/*
+	*	Função que atribui o valor mudado no select à variavel andar
+	*/ 
+	mudarValorAndar(selecionado){
+		if(selecionado == "outro"){
+			let toast = this.toastCtrl.create({
+				message: 'Por favor especificar o andar na descrição.',
+				duration: 3000,
+				position: 'top'
+			});
+			toast.present();
+		}
+		this.andar = selecionado;
+	}
 	/**
 	 * Função que envia as informações do usuário (foto, texto) para api
 	 */
@@ -79,6 +110,8 @@ export class FotoTiradaPage {
 	    		imagem: this.base64_image,
 				texto: this.texto,
 				resolvido: false,
+				local: this.local,
+				andar: this.andar,
 				// Adicionado hora do servidor no formato UNIX TIMESTAMP
 				data: timestamp,
 				data_invertida: timestamp
