@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { RegisterPage } from '../register/register';
-
+import { User } from '../../models/user';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { HomePage } from '../home/home';
 /**
  * Generated class for the LoginPage page.
  *
@@ -17,17 +19,29 @@ import { RegisterPage } from '../register/register';
 
 export class LoginPage {
 
-  register
+  user = {} as User;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private afAuth: AngularFireAuth, public toastCtrl: ToastController, public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  redirecionaRegister(){
+  async login(user: User){
+    try{
+    const result = this.afAuth.auth.signInWithEmailAndPassword(user.email,user.password);
+    if(result){
+      this.navCtrl.push(HomePage);
+    }
+    }catch(e){
+      console.error(e);
+      if(e.toJSON.code === "auth/user-not-found"){
+        this.toastCtrl.create({
+					message: `Usuário ou senha não encontrado.`,
+					duration: 3000
+,				}).present();
+      }
+    }
+  }
+
+  registrar(){
     this.navCtrl.push(RegisterPage);
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
-  }
-
 }

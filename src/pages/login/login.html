@@ -10,22 +10,22 @@
 
     <ion-item>
       <ion-label stacked>Usuário</ion-label>
-      <ion-input type="text"></ion-input>
+      <ion-input type="text" [(ngModel)]="user.email"></ion-input>
     </ion-item>
   
     <ion-item>
       <ion-label stacked>Senha</ion-label>
-      <ion-input type="password"></ion-input>
+      <ion-input type="password" [(ngModel)]="user.password"></ion-input>
     </ion-item>
   
   </ion-list>
   <ion-row>
-    <button ion-button icon-left>
+    <button ion-button icon-left (click)="login(user)">
       <ion-icon name="arrow-forward"></ion-icon>
       Login
     </button>
 
-    <button ion-button icon-right outline (click)="redirecionaRegister()">
+    <button ion-button icon-right outline (click)="registrar()">
       Register
       <ion-icon name="add"></ion-icon>
     </button>

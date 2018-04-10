@@ -12,7 +12,10 @@ import { RegisterPage } from '../pages/register/register';
 import { Camera } from '@ionic-native/camera';
 // Http
 import { HttpModule } from '@angular/http';
-
+//AngularFire2
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from "angularfire2/auth";
+import { firebaseConfig } from './firebase.config';
 @NgModule({
   declarations: [
     MyApp,
@@ -24,7 +27,9 @@ import { HttpModule } from '@angular/http';
   imports: [
     BrowserModule,
     HttpModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

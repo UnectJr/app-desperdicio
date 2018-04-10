@@ -24,15 +24,15 @@
 
     <ion-item>
       <ion-label>Email</ion-label>
-      <ion-input type="email"></ion-input>
+      <ion-input type="email" [(ngModel)]="user.email"></ion-input>
     </ion-item>
   
     <ion-item>
       <ion-label>Senha</ion-label>
-      <ion-input type="password"></ion-input>
+      <ion-input type="password" [(ngModel)]="user.password"></ion-input>
     </ion-item>
 
-    <button ion-button icon-left>
+    <button ion-button icon-left (click)="registrar(user)">
         <ion-icon name="arrow-forward"></ion-icon>
         Cadastrar
     </button>
