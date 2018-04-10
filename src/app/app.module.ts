@@ -6,6 +6,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { FotoTiradaPage } from '../pages/foto-tirada/foto-tirada';
+import { LoginPage } from '../pages/login/login';
+import { RegisterPage } from '../pages/register/register';
 // Camera
 import { Camera } from '@ionic-native/camera';
 // Http
@@ -15,7 +17,9 @@ import { HttpModule } from '@angular/http';
   declarations: [
     MyApp,
     HomePage,
-    FotoTiradaPage
+    FotoTiradaPage,
+    LoginPage,
+    RegisterPage
   ],
   imports: [
     BrowserModule,
@@ -26,7 +30,9 @@ import { HttpModule } from '@angular/http';
   entryComponents: [
     MyApp,
     HomePage,
-    FotoTiradaPage
+    FotoTiradaPage,
+    LoginPage,
+    RegisterPage
   ],
   providers: [
     StatusBar,
