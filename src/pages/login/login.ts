@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { RegisterPage } from '../register/register';
 import { User } from '../../models/user';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -26,18 +26,27 @@ export class LoginPage {
 
   async login(user: User){
     try{
-    const result = this.afAuth.auth.signInWithEmailAndPassword(user.email,user.password);
+    const result = await this.afAuth.auth.signInWithEmailAndPassword(user.email,user.password);
     if(result){
       this.navCtrl.push(HomePage);
     }
     }catch(e){
-      console.error(e);
-      if(e.toJSON.code === "auth/user-not-found"){
-        this.toastCtrl.create({
-					message: `Usuário ou senha não encontrado.`,
-					duration: 3000
-,				}).present();
+      let mensagem:string;
+      switch(e.code){
+        case 'auth/argument-error':{
+          mensagem = `Por favor preencha os campos email e senha.`;
+        }
+        case 'auth/invalid-email':{
+          mensagem = `Email inválido.`;
+        }
+        case 'auth/user-not-found':{
+          mensagem = `Usuário não encontrado.`
+        }
       }
+      this.toastCtrl.create({
+				message: mensagem,
+				duration: 3000
+,			}).present();
     }
   }
 
