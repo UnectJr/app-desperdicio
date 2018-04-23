@@ -68,8 +68,8 @@ export class FotoTiradaPage {
 	/*
 	*	Função que atribui o valor mudado no select à variavel local
 	*/ 
-	mudarValorLocal(selecionado){
-		if(selecionado == "outro"){
+	mudarValorLocal(selecionado:string){
+		if(selecionado == "Outro"){
 			let toast = this.toastCtrl.create({
 				message: 'Por favor especificar o local na descrição.',
 				duration: 3000,
@@ -82,8 +82,8 @@ export class FotoTiradaPage {
 	/*
 	*	Função que atribui o valor mudado no select à variavel andar
 	*/ 
-	mudarValorAndar(selecionado){
-		if(selecionado == "outro"){
+	mudarValorAndar(selecionado:string){
+		if(selecionado == "Outro"){
 			let toast = this.toastCtrl.create({
 				message: 'Por favor especificar o andar na descrição.',
 				duration: 3000,

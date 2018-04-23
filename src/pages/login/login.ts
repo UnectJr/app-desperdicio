@@ -32,15 +32,19 @@ export class LoginPage {
     }
     }catch(e){
       let mensagem:string;
+      console.log(e.code);
       switch(e.code){
         case 'auth/argument-error':{
           mensagem = `Por favor preencha os campos email e senha.`;
+          break;
         }
         case 'auth/invalid-email':{
           mensagem = `Email inválido.`;
+          break;
         }
         case 'auth/user-not-found':{
-          mensagem = `Usuário não encontrado.`
+          mensagem = `Usuário não encontrado.`;
+          break;
         }
       }
       this.toastCtrl.create({

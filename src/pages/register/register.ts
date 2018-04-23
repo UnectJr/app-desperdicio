@@ -45,4 +45,8 @@ export class RegisterPage {
     }
   }
 
+  voltar(){
+    this.navCtrl.pop();
+  }
+
 }
