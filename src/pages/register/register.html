@@ -9,27 +9,27 @@
   <ion-list inset>
     <ion-item>
       <ion-label>Nome</ion-label>
-      <ion-input type="text"></ion-input>
+      <ion-input type="text" [(ngModel)]="user.firstName" required></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label>Sobrenome</ion-label>
-      <ion-input type="text"></ion-input>
+      <ion-input type="text" [(ngModel)]="user.lastName" required></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label>RA</ion-label>
-      <ion-input type="number"></ion-input>
+      <ion-input type="number" [(ngModel)]="user.RA" required></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label>Email</ion-label>
-      <ion-input type="email" [(ngModel)]="user.email"></ion-input>
+      <ion-input type="email" [(ngModel)]="user.email" required></ion-input>
     </ion-item>
   
     <ion-item>
       <ion-label>Senha</ion-label>
-      <ion-input type="password" [(ngModel)]="user.password"></ion-input>
+      <ion-input type="password" [(ngModel)]="user.password" required></ion-input>
     </ion-item>
 
     <button ion-button icon-left (click)="registrar(user)">

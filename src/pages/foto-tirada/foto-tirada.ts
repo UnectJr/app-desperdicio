@@ -17,7 +17,7 @@ export class FotoTiradaPage {
 	public texto: string;
 	public andar: string;
 	public local: string;
-	public email: string;
+	public uid: string;
 
 	/**
 	 * Foto como string de base 64
@@ -62,7 +62,7 @@ export class FotoTiradaPage {
 		this.texto = "";
 		this.local = "";
 		this.andar = "";
-		this.email = this.navParams.get('email');
+		this.uid = this.navParams.get('uid');
 		this.foto_enviada = false;
 	}
 	/*
@@ -114,7 +114,7 @@ export class FotoTiradaPage {
 				resolvido: false,
 				local: this.local,
 				andar: this.andar,
-				email: this.email,
+				uid: this.uid,
 				// Adicionado hora do servidor no formato UNIX TIMESTAMP
 				data: timestamp,
 				data_invertida: timestamp
