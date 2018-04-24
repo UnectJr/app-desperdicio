@@ -10,6 +10,7 @@ import { FotoTiradaPage } from '../foto-tirada/foto-tirada';
 import { firebaseDatabase, timestamp } from '../../app/firebase.config';
 // AngularFire2Auth
 import { AngularFireAuth } from 'angularfire2/auth';
+import { User } from '../../models/user';
 
 
 @Component({
@@ -20,6 +21,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 
 export class HomePage {
 	uid: string;
+	user = {} as User;
 	
 	/**
 	 * Rota da api para deploy das informações
@@ -45,9 +47,12 @@ export class HomePage {
 				if(data && data.email && data.uid){
 					this.uid = data.uid;
 					firebaseDatabase.ref(this.url_api+ data.uid).once('value').then(
-						function(snapshot){
+						(res) => {
+							delete this.user.password;
+							this.user = res.val();
+
 							toastCtrl.create({
-								message: 'Logado como '+snapshot.val().firstName+" "+snapshot.val().lastName+".",
+								message: 'Logado como '+this.user.firstName+" "+this.user.lastName+".",
 								duration: 3000
 							}).present();
 						}
@@ -148,6 +153,7 @@ export class HomePage {
 	    	// Envia foto para próxima página
 	        this.navCtrl.push(FotoTiradaPage, {
 				foto: "data:image/jpeg;base64," + imageData
+				,uid:this.uid
 			});
 	    }, (err) => {
 	    	// Termina mensagem de carregamento

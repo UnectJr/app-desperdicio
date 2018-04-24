@@ -32,7 +32,6 @@ export class LoginPage {
     }
     }catch(e){
       let mensagem:string;
-      console.log(e.code);
       switch(e.code){
         case 'auth/argument-error':{
           mensagem = `Por favor preencha os campos email e senha.`;

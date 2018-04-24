@@ -51,48 +51,54 @@ export class RegisterPage {
 
   async registrar(user: User){
     try{
-      const result = await this.afauth.auth.createUserWithEmailAndPassword(user.email,user.password);
-      if(result){
-        console.log(result.uid);
+      if(user.firstName != null && user.lastName != null && user.RA != null){
+        const result = await this.afauth.auth.createUserWithEmailAndPassword(user.email,user.password);
+        if(result){
 
-        let body = {
-          firstName: this.user.firstName,
-          lastName: this.user.lastName,
-          RA: this.user.RA,
-          email: this.user.email,
-          uid: result.uid,
-          tipo: 1
+          let body = {
+            firstName: this.user.firstName,
+            lastName: this.user.lastName,
+            RA: this.user.RA,
+            email: this.user.email,
+            uid: result.uid,
+            tipo: 1
+          }
+
+          firebaseDatabase.ref(this.url_api).child(result.uid).set(body);
+
+          // Toast
+          let toast = this.toastCtrl.create({
+            message: 'Usuário criado com sucesso!',
+            duration: 3000,
+            position: 'top'
+          });
+          // Quando toast termina seu tempo a navegação volta para home
+          toast.onDidDismiss(() => {
+            this.navCtrl.push(LoginPage);
+          });
+          // Mostra mensagem
+          toast.present();
         }
-        console.log(body);
-
-        var promise = firebaseDatabase.ref(this.url_api).child(result.uid).set(body);
-
-        // Toast
-        let toast = this.toastCtrl.create({
-          message: 'Usuário criado com sucesso!',
-          duration: 3000,
-          position: 'top'
-        });
-        // Quando toast termina seu tempo a navegação volta para home
-        toast.onDidDismiss(() => {
-          this.navCtrl.push(LoginPage);
-        });
-        // Mostra mensagem
-        toast.present();
+      }else{
+        throw new Error('missing-arguments');
       }
     }
     catch(e){
       console.error(e);
       let mensagem:string;
-      switch(e.code){
-        case 'auth/argument-error':{
-          mensagem = 'Por favor preencher todos os parametros.';
-          break;
+      if(e.code){
+        switch(e.code){
+          case 'auth/argument-error':{
+            mensagem = 'Por favor preencher todos os parametros.';
+            break;
+          }
+          case 'auth/email-already-in-use':{
+            mensagem = 'Email já cadastrado.';
+            break;
+          }
         }
-        case 'auth/email-already-in-use':{
-          mensagem = 'Email já cadastrado.';
-          break;
-        }
+      }else{
+        mensagem = 'Por favor preencha todos os campos.';
       }
 
       this.toastCtrl.create({
