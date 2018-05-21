@@ -61,7 +61,7 @@ export class RegisterPage {
             RA: this.user.RA,
             email: this.user.email,
             uid: result.uid,
-            tipo: 1
+            tipo: false
           }
 
           firebaseDatabase.ref(this.url_api).child(result.uid).set(body);
