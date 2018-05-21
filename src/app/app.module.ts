@@ -16,13 +16,15 @@ import { HttpModule } from '@angular/http';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from "angularfire2/auth";
 import { firebaseConfig } from './firebase.config';
+import { RecuperarSenhaPage } from '../pages/recuperar-senha/recuperar-senha';
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     FotoTiradaPage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    RecuperarSenhaPage
   ],
   imports: [
     BrowserModule,
@@ -37,7 +39,8 @@ import { firebaseConfig } from './firebase.config';
     HomePage,
     FotoTiradaPage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    RecuperarSenhaPage
   ],
   providers: [
     StatusBar,

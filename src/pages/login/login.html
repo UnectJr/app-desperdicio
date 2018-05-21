@@ -17,7 +17,11 @@
       <ion-label stacked>Senha</ion-label>
       <ion-input type="password" [(ngModel)]="user.password"></ion-input>
     </ion-item>
-  
+
+    <div text-center class="esqueci">
+      <a (click)="esqueciMinhaSenha()">Esqueci minha senha</a>
+    </div>
+
   </ion-list>
   <ion-row>
     <button ion-button icon-left (click)="login(user)">

@@ -4,6 +4,7 @@ import { RegisterPage } from '../register/register';
 import { User } from '../../models/user';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { HomePage } from '../home/home';
+import { RecuperarSenhaPage } from '../recuperar-senha/recuperar-senha';
 /**
  * Generated class for the LoginPage page.
  *
@@ -28,7 +29,7 @@ export class LoginPage {
     try{
     const result = await this.afAuth.auth.signInWithEmailAndPassword(user.email,user.password);
     if(result){
-      this.navCtrl.push(HomePage);
+      this.navCtrl.setRoot(HomePage);
     }
     }catch(e){
       let mensagem:string;
@@ -55,5 +56,9 @@ export class LoginPage {
 
   registrar(){
     this.navCtrl.push(RegisterPage);
+  }
+
+  esqueciMinhaSenha(){
+    this.navCtrl.push(RecuperarSenhaPage);
   }
 }
