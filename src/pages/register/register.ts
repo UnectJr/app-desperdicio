@@ -50,11 +50,20 @@ export class RegisterPage {
   }
 
   async registrar(user: User){
+    let regex = new RegExp('[a-zA-Z0-9_]+(@){1}(alunos.)?(utfpr.edu.br){1}');
+    if(!regex.test(user.email)){
+      this.toastCtrl.create({
+        message: "Apenas são aceitos emails da UTFPR. Caso não tenha solicite ao COGETI.",
+        duration: 3000
+      }).present();
+      return;
+    }
+
     try{
       if(user.firstName != null && user.lastName != null && user.RA != null){
         const result = await this.afauth.auth.createUserWithEmailAndPassword(user.email,user.password);
+        
         if(result){
-
           let body = {
             firstName: this.user.firstName,
             lastName: this.user.lastName,
@@ -68,10 +77,17 @@ export class RegisterPage {
 
           // Toast
           let toast = this.toastCtrl.create({
-            message: 'Usuário criado com sucesso!',
+            message: 'Usuário criado com sucesso! Por favor confirme a conta no seu email!',
             duration: 3000,
             position: 'top'
           });
+
+          this.afauth.authState.subscribe(data => {
+            if(data && data.email && data.uid){
+              data.sendEmailVerification();
+            }
+          });
+
           // Quando toast termina seu tempo a navegação volta para home
           toast.onDidDismiss(() => {
             this.navCtrl.push(LoginPage);

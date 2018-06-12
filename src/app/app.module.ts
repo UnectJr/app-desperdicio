@@ -17,6 +17,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from "angularfire2/auth";
 import { firebaseConfig } from './firebase.config';
 import { RecuperarSenhaPage } from '../pages/recuperar-senha/recuperar-senha';
+import { VerificaEmailPage } from '../pages/verifica-email/verifica-email';
 @NgModule({
   declarations: [
     MyApp,
@@ -24,7 +25,8 @@ import { RecuperarSenhaPage } from '../pages/recuperar-senha/recuperar-senha';
     FotoTiradaPage,
     LoginPage,
     RegisterPage,
-    RecuperarSenhaPage
+    RecuperarSenhaPage,
+    VerificaEmailPage
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,8 @@ import { RecuperarSenhaPage } from '../pages/recuperar-senha/recuperar-senha';
     FotoTiradaPage,
     LoginPage,
     RegisterPage,
-    RecuperarSenhaPage
+    RecuperarSenhaPage,
+    VerificaEmailPage
   ],
   providers: [
     StatusBar,

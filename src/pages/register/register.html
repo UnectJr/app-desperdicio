@@ -31,14 +31,15 @@
       <ion-label>Senha</ion-label>
       <ion-input type="password" [(ngModel)]="user.password" required ></ion-input>
     </ion-item>
-
+  </ion-list>
+  <div class="botoes">
     <button ion-button icon-left (click)="registrar(user)">
-        <ion-icon name="arrow-forward"></ion-icon>
-        Cadastrar
+      <ion-icon name="arrow-forward"></ion-icon>
+      Cadastrar
     </button>
     <button ion-button icon-left (click)="voltar()" color="light">
       <ion-icon name="arrow-back"></ion-icon>
       Voltar
     </button>
-  </ion-list>
+  </div>
 </ion-content>

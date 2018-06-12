@@ -24,15 +24,17 @@
 
   </ion-list>
   <ion-row>
-    <button ion-button icon-left (click)="login(user)">
-      <ion-icon name="arrow-forward"></ion-icon>
-      Login
-    </button>
-
-    <button ion-button icon-right outline (click)="registrar()">
-      Register
-      <ion-icon name="add"></ion-icon>
-    </button>
+    <div class="botoes">
+      <button ion-button icon-left (click)="login(user)">
+        <ion-icon name="arrow-forward"></ion-icon>
+        Login
+      </button>
+  
+      <button ion-button icon-right outline (click)="registrar()">
+        Registrar
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </div>
   </ion-row>
 
 </ion-content>

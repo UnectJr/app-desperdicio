@@ -11,6 +11,8 @@ import { firebaseDatabase, timestamp } from '../../app/firebase.config';
 // AngularFire2Auth
 import { AngularFireAuth } from 'angularfire2/auth';
 import { User } from '../../models/user';
+import { LoginPage } from '../login/login';
+import { VerificaEmailPage } from '../verifica-email/verifica-email';
 
 
 @Component({
@@ -51,10 +53,14 @@ export class HomePage {
 							delete this.user.password;
 							this.user = res.val();
 
-							toastCtrl.create({
-								message: 'Logado como '+this.user.firstName+" "+this.user.lastName+".",
-								duration: 3000
-							}).present();
+							if(data.emailVerified){
+								toastCtrl.create({
+									message: 'Logado como '+this.user.firstName+" "+this.user.lastName+".",
+									duration: 3000
+								}).present();
+							}else{
+								this.navCtrl.setRoot(VerificaEmailPage);
+							}							
 						}
 					);
 				}
