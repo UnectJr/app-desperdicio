@@ -6,38 +6,50 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { FotoTiradaPage } from '../pages/foto-tirada/foto-tirada';
+import { LoginPage } from '../pages/login/login';
+import { RegisterPage } from '../pages/register/register';
 // Camera
 import { Camera } from '@ionic-native/camera';
-// Network
-import { Network } from '@ionic-native/network';
 // Http
 import { HttpModule } from '@angular/http';
-import { ConnectivityServiceProvider } from '../providers/connectivity-service/connectivity-service';
-
+//AngularFire2
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from "angularfire2/auth";
+import { firebaseConfig } from './firebase.config';
+import { RecuperarSenhaPage } from '../pages/recuperar-senha/recuperar-senha';
+import { VerificaEmailPage } from '../pages/verifica-email/verifica-email';
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    FotoTiradaPage
+    FotoTiradaPage,
+    LoginPage,
+    RegisterPage,
+    RecuperarSenhaPage,
+    VerificaEmailPage
   ],
   imports: [
     BrowserModule,
     HttpModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    FotoTiradaPage
+    FotoTiradaPage,
+    LoginPage,
+    RegisterPage,
+    RecuperarSenhaPage,
+    VerificaEmailPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     Camera,
-    Network,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ConnectivityServiceProvider
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
 export class AppModule {}

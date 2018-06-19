@@ -7,7 +7,7 @@
 -->
 <ion-header>
 
-	<ion-navbar color="primary">
+	<ion-navbar color="unect01">
 		<ion-title>Enviar notificação</ion-title>
 	</ion-navbar>
 
@@ -19,15 +19,41 @@
 		<ion-card-content>
 			<h2>Notificação sobre desperdício</h2>
 			<img [src]="base64_image" *ngIf="base64_image" />
+			<ion-list>
+				<ion-item>
+				  <ion-label>Local</ion-label>
+				  <ion-select [(ngModel)]="local" (ionChange)="mudarValorLocal(local)" [ngModelOptions]="{standalone: true}">
+					<ion-option value="Bloco A">Bloco A</ion-option>
+					<ion-option value="Bloco P">Bloco P</ion-option>
+					<ion-option value="Bloco GHI">Bloco GHI</ion-option>
+					<ion-option value="Bloco K">Bloco K</ion-option>
+					<ion-option value="Hall">Hall</ion-option>
+					<ion-option value="Incubadora">Incubadora</ion-option>
+					<ion-option value="Outro">Outro</ion-option>
+				  </ion-select>
+				</ion-item>
+			  </ion-list>
+			  <ion-list>
+				<ion-item>
+				  <ion-label>Andar</ion-label>
+				  <ion-select [(ngModel)]="andar" (ionChange)="mudarValorAndar(andar)" [ngModelOptions]="{standalone: true}">
+					<ion-option value="Nenhum">Nenhum</ion-option>
+					<ion-option value="Térreo">Térreo</ion-option>
+					<ion-option value="1">1</ion-option>
+					<ion-option value="2">2</ion-option>
+					<ion-option value="Outro">Outro</ion-option>
+				  </ion-select>
+				</ion-item>
+			  </ion-list>
 			<ion-textarea placeholder="Descrição (opcional)" [value]="texto" [(ngModel)]="texto"></ion-textarea>
-			<button ion-button color="primary" (click)="enviar()">Enviar</button>
-			<button ion-button color="primary" (click)="cancelar()">Cancelar</button>
+			<button ion-button color="unect01" (click)="enviar()">Enviar</button>
+			<button ion-button color="unect01" (click)="cancelar()">Cancelar</button>
 		</ion-card-content>
 	</ion-card>
 </ion-content>
 
 <ion-footer>
-	<ion-toolbar color="primary">
-		<ion-title><img src="assets/images/unect-logo.png" width="30" height="35" alt="unect logo"></ion-title>
+	<ion-toolbar color="unect01">
+		<ion-title><img src="assets/images/unect_jr_logo_cor_01.png" width="50" height="50" alt="unect logo"></ion-title>
 	</ion-toolbar>
 </ion-footer>

@@ -5,26 +5,33 @@
 -->
 
 <ion-content padding-top text-center>
-	<ion-header>
-		<ion-navbar color="primary">
-			<ion-title>UTFPR Desperdício</ion-title>
-		</ion-navbar>
-	</ion-header>
 	<div id="container">
+		<h4>Bem vindo ao app</h4>
+		<h1>UTFPR Desperdício</h1>
 		<div class="row"></div>
-		<img src="assets/images/water.png" width="50" height="50">
-		<ion-title>Bem vindo ao app</ion-title>
 		<div class="row"></div>
-		<p>Para reportar alguma irregularidade clique em um dos ícones abaixo</p>
-		<div class="container">
+		<p>
+			Para reportar clique em um dos ícones abaixo
+		</p>
+		<div class="row">
 			<div class="col">
-				<button ion-button round color="primary" (click)="capturar_foto(false)">
-					<ion-icon name="md-camera" color="light"></ion-icon> &nbsp; Capturar Imagem
+				<button ion-button icon-only color="light" class="btn-circle btn-xl" (click)="capturar_foto(false)">
+					<ion-icon name="md-camera" color="dark"></ion-icon>
 				</button>
 			</div>
 			<div class="col">
-				<button ion-button outline round color="primary" (click)="capturar_foto(true)">
-					<ion-icon name="md-images" color="primary"></ion-icon> &nbsp; Galeria de fotos
+				<button ion-button icon-only color="light" class="btn-circle btn-xl" (click)="capturar_foto(true)">
+					<ion-icon name="md-albums" color="dark"></ion-icon>
+				</button>
+			</div>
+			<div class="col">
+				<button ion-button icon-only color="dark" class="btn-circle btn-xl" (click)="testar_api()">
+					<ion-icon name="md-albums" color="light"></ion-icon>
+				</button>
+			</div>
+			<div class="col">
+				<button ion-button icon-only color="dark" class="btn-circle btn-xl" (click)="redireciona_foto()">
+					<ion-icon name="md-arrow-up" color="light"></ion-icon>
 				</button>
 			</div>
 		</div>
@@ -32,7 +39,7 @@
 </ion-content>
 
 <ion-footer>
-	<ion-toolbar color="primary">
-		<ion-title><img src="assets/images/unect-logo.png" width="30" height="35" alt="unect logo"></ion-title>
+	<ion-toolbar color="unect01">
+		<ion-title><img src="assets/images/unect_jr_logo_cor_01.png" width="50" height="50" alt="unect logo"></ion-title>
 	</ion-toolbar>
 </ion-footer>

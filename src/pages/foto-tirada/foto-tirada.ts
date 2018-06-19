@@ -3,9 +3,6 @@ import { IonicPage, NavController, NavParams, LoadingController, ToastController
 // Http
 import 'rxjs/add/operator/map';
 import { firebaseDatabase, timestamp } from '../../app/firebase.config'
-// Network
-import { Network } from '@ionic-native/network';
-import { ConnectivityServiceProvider } from '../../providers/connectivity-service/connectivity-service';
 
 @IonicPage()
 @Component({
@@ -18,6 +15,9 @@ export class FotoTiradaPage {
 	 * Texto para descrição da imagem
 	 */
 	public texto: string;
+	public andar: string;
+	public local: string;
+	public uid: string;
 
 	/**
 	 * Foto como string de base 64
@@ -42,7 +42,7 @@ export class FotoTiradaPage {
 	 * 
 	 */
 	public url_root = "https://app-agua-utfpr.firebaseio.com/"
-	
+
 	/**
 	 * Rota da api para deploy das informações (imagem, texto)
 	 */
@@ -54,64 +54,82 @@ export class FotoTiradaPage {
 	public foto_enviada: boolean;
 
 	/**
-	 * Atributo para mostrar aviso de carregamento
-	 */
-	public loading;
-
-	/**
-	 * Watcher da rede
-	 */
-	public disconnectSubscription;
-
-	/**
 	 * Construtor da página. Carrega a foto tirada pela câmera
 	 */
 	constructor(public navCtrl: NavController, public navParams: NavParams,
-		public loadingCtrl: LoadingController, public toastCtrl: ToastController,
-		public network: Network, public connectivityService: ConnectivityServiceProvider) {
+		public loadingCtrl: LoadingController, public toastCtrl: ToastController,) {
 		this.base64_image = this.navParams.get('foto');
 		this.texto = "";
+		this.local = "";
+		this.andar = "";
+		this.uid = this.navParams.get('uid');
 		this.foto_enviada = false;
-		this.loading = this.loadingCtrl.create({content: 'Enviando...'});
-		// watch network for a disconnect
-		this.disconnectSubscription = this.network.onDisconnect().subscribe(() => {
-			this.sem_conexao();
-		});
 	}
-
+	/*
+	*	Função que atribui o valor mudado no select à variavel local
+	*/ 
+	mudarValorLocal(selecionado:string){
+		if(selecionado == "Outro"){
+			let toast = this.toastCtrl.create({
+				message: 'Por favor especificar o local na descrição.',
+				duration: 3000,
+				position: 'top'
+			});
+			toast.present();
+		}
+		this.local = selecionado;
+	}
+	/*
+	*	Função que atribui o valor mudado no select à variavel andar
+	*/ 
+	mudarValorAndar(selecionado:string){
+		if(selecionado == "Outro"){
+			let toast = this.toastCtrl.create({
+				message: 'Por favor especificar o andar na descrição.',
+				duration: 3000,
+				position: 'top'
+			});
+			toast.present();
+		}
+		this.andar = selecionado;
+	}
 	/**
 	 * Função que envia as informações do usuário (foto, texto) para api
 	 */
 	enviar() {
-		if(!this.connectivityService.isOnline()) {
-			this.sem_conexao();
-		}
-		else if(this.connectivityService.isOnline() && !this.foto_enviada && this.base64_image !== undefined) {
+		// Se a imagem for indefinida (não existir), ou se report já foi enviado, não executa envio
+		if(!this.foto_enviada && this.base64_image !== undefined){
 			// Atualiza flag de envio do report para não permitir enviar duas vezes seguidas
 			this.foto_enviada = true;
 			// Mostra uma mensagem de carregamento enquanto envia mensagem p/ api
-			this.loading.present();
+			let loading = this.loadingCtrl.create({
+				content: 'Enviando...'
+			});
+			loading.present();
+			//console.log("Enviando report...");
 			// Cria um corpo para a mensagem (JSON oom foto e texto)
 			let body = {
 	    		imagem: this.base64_image,
 				texto: this.texto,
 				resolvido: false,
+				local: this.local,
+				andar: this.andar,
+				uid: this.uid,
 				// Adicionado hora do servidor no formato UNIX TIMESTAMP
 				data: timestamp,
-				data_invertida: null
+				data_invertida: timestamp
+				//data: now.getDate()+"/"+(1+now.getMonth())+"/"+now.getFullYear()+" ~~ "+now.getHours()+":"+now.getMinutes()	
 			};
 			// Realiza o push de informações no banco
 			var promise = firebaseDatabase.ref(this.url_api).push(body);
 			// Recupera o timestamp do servidor e modifica o body
-			promise.on('value', function(snapshot){
-					body.data_invertida = snapshot.val().data * -1;
+			promise.on('value', function(snapshot) {
+				body.data_invertida = snapshot.val().data_invertida * -1;
 			});
 			// Atualiza somente data_invertida do post com data invertida
 			firebaseDatabase.ref(this.url_api + promise.key).update({ data_invertida: body.data_invertida }).then(
 				() => {
-					// stop disconnect watch
-					this.disconnectSubscription.unsubscribe();
-					this.loading.dismiss();
+					loading.dismiss();
 					// Toast
 					let toast = this.toastCtrl.create({
 						message: 'Report enviado!',
@@ -125,9 +143,7 @@ export class FotoTiradaPage {
 					// Mostra mensagem
 					toast.present();
 				}, (err) => {
-					// stop disconnect watch
-					this.disconnectSubscription.unsubscribe();
-					this.loading.dismiss();
+					loading.dismiss();
 					// Toast
 					let toast = this.toastCtrl.create({
 						message: 'Erro ao enviar report!',
@@ -144,32 +160,13 @@ export class FotoTiradaPage {
 			);
 		}
 	}
+	
 
 	/**
 	 * Função para cancelar o envio do alerta. Volta para home
 	 */
 	cancelar() {
 		this.navCtrl.pop();
-	}
-
-	/**
-	 * Função que é chamada quando não houver conexão
-	 */
-	sem_conexao() {
-		// Encerra carregamento, caso tenha algum aberto
-		this.loading.dismiss();
-		// Toast
-		let toast = this.toastCtrl.create({
-			message: 'Você está sem conexão! :-(',
-			duration: 3000,
-			position: 'top'
-		});
-		// Quando toast termina seu tempo a navegação volta para home
-		toast.onDidDismiss(() => {
-			this.cancelar();
-		});
-		// Mostra mensagem
-		toast.present();
 	}
 
 }
