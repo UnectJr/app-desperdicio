@@ -8,8 +8,9 @@
 	<div id="container">
 		<h4>Bem vindo ao app</h4>
 		<h1>UTFPR Desperdício</h1>
-		<div class="row"></div>
-		<div class="row"></div>
+		<ion-item>
+			<img class="imagem" src="assets/images/LogoAAeS.png" width="250" height="335" alt="logo projeto">
+		</ion-item>
 		<p>
 			Para reportar clique em um dos ícones abaixo
 		</p>
@@ -22,16 +23,6 @@
 			<div class="col">
 				<button ion-button icon-only color="light" class="btn-circle btn-xl" (click)="capturar_foto(true)">
 					<ion-icon name="md-albums" color="dark"></ion-icon>
-				</button>
-			</div>
-			<div class="col">
-				<button ion-button icon-only color="dark" class="btn-circle btn-xl" (click)="testar_api()">
-					<ion-icon name="md-albums" color="light"></ion-icon>
-				</button>
-			</div>
-			<div class="col">
-				<button ion-button icon-only color="dark" class="btn-circle btn-xl" (click)="redireciona_foto()">
-					<ion-icon name="md-arrow-up" color="light"></ion-icon>
 				</button>
 			</div>
 		</div>

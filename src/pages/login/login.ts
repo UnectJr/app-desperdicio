@@ -46,6 +46,10 @@ export class LoginPage {
           mensagem = `Usuário não encontrado.`;
           break;
         }
+        case 'auth/wrong-password':{
+          mensagem = `Senha incorreta.`;
+          break;
+        }
       }
       this.toastCtrl.create({
 				message: mensagem,
