@@ -1,6 +1,12 @@
 page-verifica-email {
-    h1,h2{
-        text-align: center;
+    #title {
+        padding-top: 50px;
+        padding-bottom: 10px;
+    }
+
+    p {
+        max-width: 80%;
+        margin: 0 auto;
     }
 
     .botoes{
@@ -9,5 +15,11 @@ page-verifica-email {
         margin-right: -50%;
         transform: translate(-50%, -50%);
         padding-top: 40px;
+        margin-top: 20px;
     }
+
+    .unect {
+		margin: 0 auto;
+		display: block;
+	}
 }

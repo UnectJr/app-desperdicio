@@ -1,4 +1,7 @@
 page-home {
+	.water-img {
+		margin-top: 20px;
+	}
 
 	.btn-circle.btn-xl {
 		width: 34vw;
@@ -17,4 +20,17 @@ page-home {
 		font-size: 4em;
 	}
 
+	.unect {
+		margin: 0 auto;
+		display: block;
+	}
+
+	p {
+		max-width: 80%;
+		margin: 0 auto;
+	}
+
+	.buttons {
+		margin-top: 20px;
+	}
 }

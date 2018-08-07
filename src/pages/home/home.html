@@ -4,15 +4,45 @@
   Aqui é possível ao usuário decidir entre tirar uma foto (ícone da câmera) ou escolher uma da galeria do celular dele (ícone da galeria)
 -->
 
+<ion-header text-center>
+	<ion-navbar color="primary">
+		<ion-title>UTFPR Desperdício</ion-title>
+	</ion-navbar>
+</ion-header>
+
 <ion-content padding-top text-center>
 	<div id="container">
-		<h4>Bem vindo ao app</h4>
-		<h1>UTFPR Desperdício</h1>
-		<div class="row"></div>
-		<div class="row"></div>
+		<!--
 		<p>
 			Para reportar clique em um dos ícones abaixo
 		</p>
+		-->
+		<div id="content">
+			<img src="assets/images/water.png" class="water-img" width="150" height="150">
+			<h1> Bem vindo! </h1>
+		
+			<p> Para reportar alguma irregularidade clique em um dos ícones abaixo. </p>
+			<div class="buttons">
+				<div class="col">
+					<button ion-button outline round color="primary" (click)="capturar_foto(false)">
+						<ion-icon name="md-camera" color="primary"></ion-icon> &nbsp; Capturar Imagem
+					</button>
+				</div>
+				<div class="col">
+					<button ion-button outline round color="primary" (click)="capturar_foto(true)">
+						<ion-icon name="md-images" color="primary"></ion-icon> &nbsp; Galeria de fotos
+					</button>
+				</div>
+				<div class="col">
+					<button ion-button round color="primary" (click)="redireciona_foto()">
+						<ion-icon name="md-arrow-up" color="light"></ion-icon> &nbsp; Enviar 
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</ion-content>
+		<!--
 		<div class="row">
 			<div class="col">
 				<button ion-button icon-only color="light" class="btn-circle btn-xl" (click)="capturar_foto(false)">
@@ -25,21 +55,16 @@
 				</button>
 			</div>
 			<div class="col">
-				<button ion-button icon-only color="dark" class="btn-circle btn-xl" (click)="testar_api()">
-					<ion-icon name="md-albums" color="light"></ion-icon>
-				</button>
-			</div>
-			<div class="col">
 				<button ion-button icon-only color="dark" class="btn-circle btn-xl" (click)="redireciona_foto()">
 					<ion-icon name="md-arrow-up" color="light"></ion-icon>
 				</button>
 			</div>
 		</div>
 	</div>
-</ion-content>
+-->
 
 <ion-footer>
 	<ion-toolbar color="unect01">
-		<ion-title><img src="assets/images/unect_jr_logo_cor_01.png" width="50" height="50" alt="unect logo"></ion-title>
+		<ion-title><img class="unect" src="assets/images/unect_jr_logo_cor_01.png" width="50" height="50" alt="unect logo"></ion-title>
 	</ion-toolbar>
 </ion-footer>

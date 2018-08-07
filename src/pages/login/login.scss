@@ -1,13 +1,25 @@
 page-login {
-    .esqueci{
-        padding-top: 20px;
+    #title {
+        padding-top: 50px;
     }
 
-    .botoes{
+    .list {
+        padding-top: 50px;
+    }
+
+    .esqueci {
+        padding: 20px 0;
+    }
+
+    .botoes {
         position: absolute;
         left: 50%;
         margin-right: -50%;
         transform: translate(-50%, -50%);
-        padding-top: 20px;
     }
+
+    .unect {
+		margin: 0 auto;
+		display: block;
+	}
 }
